@@ -55,6 +55,7 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
         });
         **/
         let content = "# 测试 Hello I am markdown \n # 一级标题 \n ## 二级标题 \n ### 三级标题";
+        let contents = "# 测试 Hello I am markdown \n # 一级标题 \n ## 二级标题 \n ### 三级标题";
         var mdresult = md.render(content);
         let result = ejs.render(html, { title: '模板页面', content: mdresult })
         resp.end(result);
