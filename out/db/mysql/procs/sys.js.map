@@ -1,0 +1,1 @@
+{"version":3,"file":"sys.js","sourceRoot":"","sources":["../../../../ts/db/mysql/procs/sys.ts"],"names":[],"mappings":";;AAEA,MAAM,WAAW,GAAa;IAC1B,IAAI,EAAE,cAAc;IACpB,MAAM,EAAE;QACJ,cAAc;KACjB;IACD,KAAK,EAAE,OAAO;IACd,IAAI,EACR;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;CAuEC;CACA,CAAA;AAED,kBAAe,CAAC,WAAW,CAAC,CAAC"}

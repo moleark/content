@@ -1,0 +1,1 @@
+{"version":3,"file":"upgrade.js","sourceRoot":"","sources":["../../../ts/db/mssql/upgrade.ts"],"names":[],"mappings":";;AAAA,kDAA6C;AAE7C,mBAAO,EAAE,CAAC,IAAI,CAAC,CAAC,CAAC,EAAE;IACf,OAAO,CAAC,GAAG,CAAC,4BAA4B,CAAC,CAAC;IAC1C,OAAO,CAAC,IAAI,EAAE,CAAC;AACnB,CAAC,CAAC,CAAC"}

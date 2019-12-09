@@ -1,0 +1,10 @@
+node_modules
+config/production.json
+config/development.json
+npm-debug.log
+npm-debug.log.*
+package-lock.json
+/ts/uq-joint
+/ts/uq-joint.old
+/api/uq-joint
+/api/uq-joint.old
