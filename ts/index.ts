@@ -1,10 +1,10 @@
-import express, { Request, Response, NextFunction, Router } from 'express';
+import express, { Request, Response, NextFunction, Router, Application } from 'express';
 import * as ejs from 'ejs';
 import * as bodyParser from 'body-parser';
 import cors from 'cors';
 import config from 'config';
 import { tableFromSql } from './db/mysql/tool';
-import { hello, markdown } from "./pages";
+import { pages } from "./pages";
 const path = require('path');
 const fs = require('fs');
 const markdownIt = require('markdown-it'), md = new markdownIt();
@@ -46,15 +46,33 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
     //设置模板引擎的格式即运用何种模板引擎
     app.set("view engine", "html");
 
-    app.use('/hello', hello);
+    buildRouter(app, pages);
+    // app.use('/hello', hello);
 
-    app.use('/markdown', markdown);
+    // app.use('/markdown', markdown);
 
     // 监听服务
     let port = config.get<number>('port');
+    
     app.listen(port, async () => {
         console.log('J&K website on port ' + port);
     });
 })();
+
+function buildRouter(app: Application, pageDefines: any) {
+    for ( let i in pageDefines) {
+        let page = pageDefines[i];
+        switch ( typeof (page)) {
+            case 'object':
+                buildRouter(app, page);
+                break;
+            case 'function':
+                app.use('/' + i, page);
+                break;
+            default:
+                throw 'unknown'
+        }
+    }
+}
 
 

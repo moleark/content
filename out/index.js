@@ -50,12 +50,28 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
     //app.engine('html', ejs.);
     //设置模板引擎的格式即运用何种模板引擎
     app.set("view engine", "html");
-    app.use('/hello', pages_1.hello);
-    app.use('/markdown', pages_1.markdown);
+    buildRouter(app, pages_1.pages);
+    // app.use('/hello', hello);
+    // app.use('/markdown', markdown);
     // 监听服务
     let port = config_1.default.get('port');
     app.listen(port, async () => {
         console.log('J&K website on port ' + port);
     });
 })();
+function buildRouter(app, pageDefines) {
+    for (let i in pageDefines) {
+        let page = pageDefines[i];
+        switch (typeof (page)) {
+            case 'object':
+                buildRouter(app, page);
+                break;
+            case 'function':
+                app.use('/' + i, page);
+                break;
+            default:
+                throw 'unknown';
+        }
+    }
+}
 //# sourceMappingURL=index.js.map
