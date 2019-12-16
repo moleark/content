@@ -1,18 +1,16 @@
-import express, { Request, Response, NextFunction, Router, Application } from 'express';
-import * as ejs from 'ejs';
-import * as bodyParser from 'body-parser';
 import cors from 'cors';
 import config from 'config';
-import { tableFromSql } from './db/mysql/tool';
 import { pages } from "./pages";
-const path = require('path');
-const fs = require('fs');
-const markdownIt = require('markdown-it'), md = new markdownIt();
+import * as bodyParser from 'body-parser';
+import express, { Request, Response, NextFunction, Router, Application } from 'express';
 
+const markdownIt = require('markdown-it'), md = new markdownIt();
+// import * as ejs from 'ejs';
+// import { tableFromSql } from './db/mysql/tool';
+// const path = require('path');
+// const fs = require('fs');
 
 (async function () {
-
-    console.log(process.env.NODE_ENV);
 
     // 创建express服务
     let app = express();

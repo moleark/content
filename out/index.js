@@ -10,16 +10,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const bodyParser = __importStar(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const config_1 = __importDefault(require("config"));
 const pages_1 = require("./pages");
-const path = require('path');
-const fs = require('fs');
+const bodyParser = __importStar(require("body-parser"));
+const express_1 = __importDefault(require("express"));
 const markdownIt = require('markdown-it'), md = new markdownIt();
+// import * as ejs from 'ejs';
+// import { tableFromSql } from './db/mysql/tool';
+// const path = require('path');
+// const fs = require('fs');
 (async function () {
-    console.log(process.env.NODE_ENV);
     // 创建express服务
     let app = express_1.default();
     app.use((err, req, res, next) => {
