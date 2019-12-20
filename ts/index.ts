@@ -5,10 +5,6 @@ import * as bodyParser from 'body-parser';
 import express, { Request, Response, NextFunction, Router, Application } from 'express';
 
 const markdownIt = require('markdown-it'), md = new markdownIt();
-// import * as ejs from 'ejs';
-// import { tableFromSql } from './db/mysql/tool';
-// const path = require('path');
-// const fs = require('fs');
 
 (async function () {
 
@@ -46,8 +42,6 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
 
     buildRouter(app, pages);
     // app.use('/hello', hello);
-
-    // app.use('/markdown', markdown);
 
     // 监听服务
     let port = config.get<number>('port');

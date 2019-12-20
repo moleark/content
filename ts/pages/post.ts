@@ -1,28 +1,24 @@
 import * as ejs from 'ejs';
+import fs from 'fs';
 import { Request, Response } from "express";
-import fs from "fs";
-import MarkdownIt from 'markdown-it';
 import { tableFromSql } from '../db/mysql/tool';
 
 export const post = async (req: Request, resp: Response) => {
-    if (req.query.param) {
-        let queryparam: string = req.query.param;
-        const ret = await tableFromSql(`SELECT * FROM webbuilder$test.tv_post WHERE id=${queryparam}`);
+    let id = req.params['id'];
+    if (id) {
+        const ret = await tableFromSql(`SELECT a.content, a.caption, b.content as template FROM webbuilder$test.tv_post a left join webbuilder$test.tv_template b on a.template=b.id WHERE a.id=${id}`);
         if (ret.length > 0) {
-            let md = new MarkdownIt();
-            let { content, template } = ret[0];
+            let { content, caption, template } = ret[0];
             let data = {
-                title: '模板页面',
-                content: content, // mdResult(md, msqContent), 
-                //headerContent: mdResult(md, headerContent), 
-                //img: mdResult(md, img) 
+                title: caption,
+                content: content,
             };
-            let result = ejs.render('<!DOCTYPE html><html lang = "en"> <head> <meta charset = "UTF-8" ><body><%= content %></body></html>', data);
+            let result = ejs.render(template, data);
             resp.end(result);
         } else {
-            resp.redirect("/b")
+            resp.redirect("/err")
         }
     } else {
-        resp.redirect("/b")
+        resp.redirect("/err")
     }
 }
