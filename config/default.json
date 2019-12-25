@@ -1,11 +1,5 @@
 {
-    "name": "uq-joint-platform",
-    "port": 3016,
-    "interval": 3000,
-    "connection": {
-        "host": "101.201.209.115",
-        "port": "3306",
-        "user": "erp_login",
-        "password": "jk@20180402!@#"
-    }
+    "name": "web-build",
+    "port": 3017,
+    "interval": 3000
 }
