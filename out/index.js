@@ -16,10 +16,6 @@ const pages_1 = require("./pages");
 const bodyParser = __importStar(require("body-parser"));
 const express_1 = __importDefault(require("express"));
 const markdownIt = require('markdown-it'), md = new markdownIt();
-// import * as ejs from 'ejs';
-// import { tableFromSql } from './db/mysql/tool';
-// const path = require('path');
-// const fs = require('fs');
 (async function () {
     // 创建express服务
     let app = express_1.default();
@@ -53,7 +49,6 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
     app.set("view engine", "html");
     buildRouter(app, pages_1.pages);
     // app.use('/hello', hello);
-    // app.use('/markdown', markdown);
     // 监听服务
     let port = config_1.default.get('port');
     app.listen(port, async () => {
@@ -69,6 +64,9 @@ function buildRouter(app, pageDefines) {
                 break;
             case 'function':
                 app.use('/' + i, page);
+                break;
+            case 'function':
+                app.use('/web-build/' + i, page);
                 break;
             default:
                 throw 'unknown';

@@ -1,13 +1,13 @@
 import { hello } from "./hello";
-import { composing } from "./composing";
+import { errorPage } from "./errorPage";
 import { markdown } from "./markdown";
 import { post } from './post';
 
 export const pages = {
     "hello": {
         "a": hello,
-        "b": composing,
+        "err":  errorPage,
     },
     "markdown": markdown,
-    "post": post,
+    "post/:id": post,
 }

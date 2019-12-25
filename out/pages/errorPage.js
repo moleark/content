@@ -13,17 +13,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const ejs = __importStar(require("ejs"));
 const markdown_it_1 = __importDefault(require("markdown-it"));
-const errContent = `# 抱歉您访问的页面不存在`;
+const errContent = `# Sorry..页面没有找到！`;
 const errImg = `![Mou icon](https://cdn2.jianshu.io/shakespeare/_next/static/images/404-203cdc8362d3b571276978d13f5ffd21.png)`;
-exports.composing = async (req, resp) => {
+exports.errorPage = async (req, resp) => {
     fs_1.default.readFile('ts/pages/templets/err.html', 'utf-8', (err, data) => {
         if (err) {
             throw err;
         }
         else {
             let md = new markdown_it_1.default();
-            // let mdContent = ;
-            // let mdimg = ;
             let replaceData = {
                 title: '项目ONE',
                 content: md.render(errContent),
@@ -34,4 +32,4 @@ exports.composing = async (req, resp) => {
         }
     });
 };
-//# sourceMappingURL=composing.js.map
+//# sourceMappingURL=errorPage.js.map
