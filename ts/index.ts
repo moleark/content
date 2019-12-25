@@ -45,21 +45,24 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
 
     // 监听服务
     let port = config.get<number>('port');
-    
+
     app.listen(port, async () => {
         console.log('J&K website on port ' + port);
     });
 })();
 
 function buildRouter(app: Application, pageDefines: any) {
-    for ( let i in pageDefines) {
+    for (let i in pageDefines) {
         let page = pageDefines[i];
-        switch ( typeof (page)) {
+        switch (typeof (page)) {
             case 'object':
                 buildRouter(app, page);
                 break;
             case 'function':
                 app.use('/' + i, page);
+                break;
+            case 'function':
+                app.use('/web-build/' + i, page);
                 break;
             default:
                 throw 'unknown'

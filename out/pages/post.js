@@ -13,15 +13,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ejs = __importStar(require("ejs"));
 const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
-const sql = `
+const sqlForWeb = `
 SELECT a.content, a.caption, b.content as template
     FROM webbuilder$test.tv_post a 
         left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
 `;
+const sqlForMobile = `
+SELECT a.content, a.caption, b.content_mobile as template
+    FROM webbuilder$test.tv_post a 
+        left join webbuilder$test.tv_template b on a.template=b.id 
+    WHERE a.id=
+`;
 exports.post = async (req, resp) => {
+    var _a;
+    let userAgent = req.headers['user-agent'];
+    let isMobile = (_a = userAgent) === null || _a === void 0 ? void 0 : _a.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
     if (id) {
+        let sql = isMobile ? sqlForMobile : sqlForWeb;
         const ret = await tool_1.tableFromSql(sql + id);
         if (ret.length > 0) {
             let md = new markdown_it_1.default({ html: true });

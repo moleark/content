@@ -65,6 +65,9 @@ function buildRouter(app, pageDefines) {
             case 'function':
                 app.use('/' + i, page);
                 break;
+            case 'function':
+                app.use('/web-build/' + i, page);
+                break;
             default:
                 throw 'unknown';
         }
