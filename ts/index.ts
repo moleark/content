@@ -40,8 +40,13 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
     //设置模板引擎的格式即运用何种模板引擎
     app.set("view engine", "html");
 
+    app.get('/', (req, res) => res.send('Hello World!'))
+    app.use((req: Request, res: Response, next: NextFunction) => {
+        console.log(req.url);
+        next();
+    });
+
     buildRouter(app, pages);
-    // app.use('/hello', hello);
 
     // 监听服务
     let port = config.get<number>('port');
