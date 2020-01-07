@@ -14,6 +14,9 @@ const ejs = __importStar(require("ejs"));
 const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
 // call webbuilder$test.tv_addbrowsinghistory (24,47,'1\tPOST\t211.5.4.7\t\n');
+const addbrowsinghistory = `
+    call webbuilder$test.tv_addbrowsinghistory (24,47,'1\tPOST\t211.5.4.7\t\n');
+`;
 const sqlForWeb = `
     SELECT  a.titel, a.name, b.content as template
     FROM    webbuilder$test.tv_webpage a 
@@ -46,7 +49,7 @@ async function doPost(req, resp, type) {
     let userAgent = req.headers['user-agent'];
     let isMobile = (_a = userAgent) === null || _a === void 0 ? void 0 : _a.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
-    console.log(id);
+    console.log(req.ip);
     if (id) {
         let sql;
         switch (type) {
@@ -56,7 +59,7 @@ async function doPost(req, resp, type) {
         }
         const ret = await tool_1.tableFromSql(sql + id);
         const contenta = await tool_1.tableFromSql(sqlForWebBrand + id);
-        console.log(contenta, 'ret');
+        // console.log(contenta,'ret')
         if (ret.length > 0) {
             let md = new markdown_it_1.default({ html: true });
             let { content, titel, template, name } = ret[0];
