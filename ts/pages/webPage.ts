@@ -7,50 +7,57 @@ import MarkdownIt from 'markdown-it';
 // call webbuilder$test.tv_addbrowsinghistory (24,47,'1\tPOST\t211.5.4.7\t\n');
 
 const sqlForWeb = `
-SELECT a.content, a.caption, b.content as template, c.path as image
-    FROM webbuilder$test.tv_post a 
-        left join webbuilder$test.tv_template b on a.template=b.id left join webbuilder$test.tv_image c on a.image=c.id
+    SELECT  a.titel, a.name, b.content as template
+    FROM    webbuilder$test.tv_webpage a 
+            left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
+`;
+
+const sqlForWebBrand = `
+    SELECT  a.webpage, a.branch, b.content as branch
+    FROM    webbuilder$test.tv_webpagebranch a 
+            left join webbuilder$test.tv_branch b on a.branch=b.id 
+    WHERE a.webpage=
 `;
 const sqlForMobile = `
-SELECT a.content, a.caption, b.content_mobile as template
-    FROM webbuilder$test.tv_post a 
-        left join webbuilder$test.tv_template b on a.template=b.id 
+SELECT  a.titel, a.name, b.content as template
+    FROM    webbuilder$test.tv_webpage a 
+            left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
 `;
 
-export const postM = async (req: Request, resp: Response) => {
-    await doPost(req, resp, 'mobile');
-}
+// export const postM = async (req: Request, resp: Response) => {
+//     await doPost(req, resp, 'mobile');
+// }
 
-export const postW = async (req: Request, resp: Response) => {
-    await doPost(req, resp, 'web');
-}
+// export const postW = async (req: Request, resp: Response) => {
+//     await doPost(req, resp, 'web');
+// }
 
-export const post = async (req: Request, resp: Response) => {
+export const webpage = async (req: Request, resp: Response) => {
     await doPost(req, resp, 'auto');
 }
 
-async function doPost(req: Request, resp: Response, type: 'web' | 'mobile' | 'auto') {
+async function doPost(req: Request, resp: Response, type: 'auto') {
     let userAgent = req.headers['user-agent'];
     let isMobile = userAgent?.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
+    console.log(id)
     if (id) {
         let sql: string;
         switch (type) {
             case 'auto': sql = isMobile ? sqlForMobile : sqlForWeb; break;
-            case 'web': sql = sqlForWeb; break;
-            case 'mobile': sql = sqlForMobile; break;
         }
         const ret = await tableFromSql(sql + id);
+        const contenta = await tableFromSql(sqlForWebBrand + id);
+        console.log(contenta,'ret')
         if (ret.length > 0) {
             let md = new MarkdownIt({ html: true });
-            let { content, caption, template, image } = ret[0];
+            let { content, titel, template, name } = ret[0];
             if (template == null) resp.redirect("/err");
             let data = {
-                icon_image: image,
-                title: caption,
-                content: mdResult(md, content),
+                title: titel,
+                content: contenta[0].branch,
             };
             let result = ejs.render(template, data);
             resp.end(result);

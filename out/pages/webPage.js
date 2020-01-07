@@ -15,24 +15,30 @@ const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
 // call webbuilder$test.tv_addbrowsinghistory (24,47,'1\tPOST\t211.5.4.7\t\n');
 const sqlForWeb = `
-SELECT a.content, a.caption, b.content as template, c.path as image
-    FROM webbuilder$test.tv_post a 
-        left join webbuilder$test.tv_template b on a.template=b.id left join webbuilder$test.tv_image c on a.image=c.id
+    SELECT  a.titel, a.name, b.content as template
+    FROM    webbuilder$test.tv_webpage a 
+            left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
+`;
+const sqlForWebBrand = `
+    SELECT  a.webpage, a.branch, b.content as branch
+    FROM    webbuilder$test.tv_webpagebranch a 
+            left join webbuilder$test.tv_branch b on a.branch=b.id 
+    WHERE a.webpage=
 `;
 const sqlForMobile = `
-SELECT a.content, a.caption, b.content_mobile as template
-    FROM webbuilder$test.tv_post a 
-        left join webbuilder$test.tv_template b on a.template=b.id 
+SELECT  a.titel, a.name, b.content as template
+    FROM    webbuilder$test.tv_webpage a 
+            left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
 `;
-exports.postM = async (req, resp) => {
-    await doPost(req, resp, 'mobile');
-};
-exports.postW = async (req, resp) => {
-    await doPost(req, resp, 'web');
-};
-exports.post = async (req, resp) => {
+// export const postM = async (req: Request, resp: Response) => {
+//     await doPost(req, resp, 'mobile');
+// }
+// export const postW = async (req: Request, resp: Response) => {
+//     await doPost(req, resp, 'web');
+// }
+exports.webpage = async (req, resp) => {
     await doPost(req, resp, 'auto');
 };
 async function doPost(req, resp, type) {
@@ -40,29 +46,25 @@ async function doPost(req, resp, type) {
     let userAgent = req.headers['user-agent'];
     let isMobile = (_a = userAgent) === null || _a === void 0 ? void 0 : _a.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
+    console.log(id);
     if (id) {
         let sql;
         switch (type) {
             case 'auto':
                 sql = isMobile ? sqlForMobile : sqlForWeb;
                 break;
-            case 'web':
-                sql = sqlForWeb;
-                break;
-            case 'mobile':
-                sql = sqlForMobile;
-                break;
         }
         const ret = await tool_1.tableFromSql(sql + id);
+        const contenta = await tool_1.tableFromSql(sqlForWebBrand + id);
+        console.log(contenta, 'ret');
         if (ret.length > 0) {
             let md = new markdown_it_1.default({ html: true });
-            let { content, caption, template, image } = ret[0];
+            let { content, titel, template, name } = ret[0];
             if (template == null)
                 resp.redirect("/err");
             let data = {
-                icon_image: image,
-                title: caption,
-                content: mdResult(md, content),
+                title: titel,
+                content: contenta[0].branch,
             };
             let result = ejs.render(template, data);
             resp.end(result);
@@ -78,4 +80,4 @@ async function doPost(req, resp, type) {
 function mdResult(md, content) {
     return md.render(content);
 }
-//# sourceMappingURL=post.js.map
+//# sourceMappingURL=webPage.js.map
