@@ -21,7 +21,7 @@ const sqlForWeb = `
     WHERE a.id=
 `;
 const sqlForWebBrand = `
-    SELECT  a.webpage, a.branch, b.content as branch
+    SELECT  a.webpage, a.branch, b.content as branch, a.sort
     FROM    webbuilder$test.tv_webpagebranch a 
             left join webbuilder$test.tv_branch b on a.branch=b.id 
     WHERE a.webpage=
@@ -32,12 +32,6 @@ SELECT  a.titel, a.name, b.content as template
             left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
 `;
-// export const postM = async (req: Request, resp: Response) => {
-//     await doPost(req, resp, 'mobile');
-// }
-// export const postW = async (req: Request, resp: Response) => {
-//     await doPost(req, resp, 'web');
-// }
 exports.webpage = async (req, resp) => {
     await doPost(req, resp, 'auto');
 };
@@ -62,9 +56,17 @@ async function doPost(req, resp, type) {
                 break;
         }
         const ret = await tool_1.tableFromSql(sql + id);
-        const webpageData = await tool_1.tableFromSql(sqlForWebBrand + id);
+        const webpageData = await tool_1.tableFromSql(sqlForWebBrand + id + " order by a.sort ");
         let content = '';
         let md = new markdown_it_1.default({ html: true });
+        webpageData.sort(function (m, n) {
+            if (m.sort < n.sort)
+                return -1;
+            else if (m.sort > n.sort)
+                return 1;
+            else
+                return 0;
+        });
         if (webpageData.length >= 1) {
             content = webpageData.map(element => {
                 return mdResult(md, element.branch);

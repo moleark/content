@@ -1,5 +1,4 @@
 import * as ejs from 'ejs';
-import fs from 'fs';
 import { Request, Response } from "express";
 import { tableFromSql } from '../db/mysql/tool';
 import MarkdownIt from 'markdown-it';
@@ -27,14 +26,6 @@ SELECT  a.titel, a.name, b.content as template
     WHERE a.id=
 `;
 
-// export const postM = async (req: Request, resp: Response) => {
-//     await doPost(req, resp, 'mobile');
-// }
-
-// export const postW = async (req: Request, resp: Response) => {
-//     await doPost(req, resp, 'web');
-// }
-
 export const webpage = async (req: Request, resp: Response) => {
     await doPost(req, resp, 'auto');
 }
@@ -61,6 +52,11 @@ async function doPost(req: Request, resp: Response, type: 'auto') {
         const webpageData = await tableFromSql(sqlForWebBrand + id + " order by a.sort ");
         let content = '';
         let md = new MarkdownIt({ html: true });
+        webpageData.sort(function (m, n) {
+            if (m.sort < n.sort) return -1
+            else if (m.sort > n.sort) return 1
+            else return 0
+           });
         if (webpageData.length >= 1) {
             content = webpageData.map(element => {
                 return mdResult(md, element.branch)
