@@ -14,9 +14,6 @@ const ejs = __importStar(require("ejs"));
 const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
 // call webbuilder$test.tv_addbrowsinghistory (24,47,'1\tPOST\t211.5.4.7\t\n');
-const addbrowsinghistory = `
-    call webbuilder$test.tv_addbrowsinghistory (24,47,'1\tPOST\t211.5.4.7\t\n');
-`;
 const sqlForWeb = `
     SELECT  a.titel, a.name, b.content as template
     FROM    webbuilder$test.tv_webpage a 
@@ -44,12 +41,19 @@ SELECT  a.titel, a.name, b.content as template
 exports.webpage = async (req, resp) => {
     await doPost(req, resp, 'auto');
 };
+const getIp = function (req) {
+    var ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddres || req.socket.remoteAddress || '';
+    if (ip.split(',').length > 0) {
+        ip = ip.split(',')[0];
+    }
+    return ip;
+};
 async function doPost(req, resp, type) {
     var _a;
     let userAgent = req.headers['user-agent'];
     let isMobile = (_a = userAgent) === null || _a === void 0 ? void 0 : _a.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
-    console.log(req.ip);
+    let userIp = getIp(req);
     if (id) {
         let sql;
         switch (type) {
@@ -58,16 +62,25 @@ async function doPost(req, resp, type) {
                 break;
         }
         const ret = await tool_1.tableFromSql(sql + id);
-        const contenta = await tool_1.tableFromSql(sqlForWebBrand + id);
-        // console.log(contenta,'ret')
+        const webpageData = await tool_1.tableFromSql(sqlForWebBrand + id);
+        let content = '';
+        let md = new markdown_it_1.default({ html: true });
+        if (webpageData.length >= 1) {
+            content = webpageData.map(element => {
+                return mdResult(md, element.branch);
+            }).join('');
+        }
+        else {
+            content = webpageData[0].branch;
+        }
         if (ret.length > 0) {
-            let md = new markdown_it_1.default({ html: true });
-            let { content, titel, template, name } = ret[0];
+            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPAGE\t${userIp}\t\n')`);
+            let { titel, template, name } = ret[0];
             if (template == null)
                 resp.redirect("/err");
             let data = {
                 title: titel,
-                content: contenta[0].branch,
+                content: content,
             };
             let result = ejs.render(template, data);
             resp.end(result);

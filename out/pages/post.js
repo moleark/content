@@ -13,11 +13,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ejs = __importStar(require("ejs"));
 const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
-// call webbuilder$test.tv_addbrowsinghistory (24,47,'1\tPOST\t211.5.4.7\t\n');
 const sqlForWeb = `
 SELECT a.content, a.caption, b.content as template, c.path as image
     FROM webbuilder$test.tv_post a 
-        left join webbuilder$test.tv_template b on a.template=b.id left join webbuilder$test.tv_image c on a.image=c.id
+        left join webbuilder$test.tv_template b on a.template=b.id 
+        left join webbuilder$test.tv_image c on a.image=c.id
     WHERE a.id=
 `;
 const sqlForMobile = `
@@ -35,11 +35,19 @@ exports.postW = async (req, resp) => {
 exports.post = async (req, resp) => {
     await doPost(req, resp, 'auto');
 };
+const getIp = function (req) {
+    var ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddres || req.socket.remoteAddress || '';
+    if (ip.split(',').length > 0) {
+        ip = ip.split(',')[0];
+    }
+    return ip;
+};
 async function doPost(req, resp, type) {
     var _a;
     let userAgent = req.headers['user-agent'];
     let isMobile = (_a = userAgent) === null || _a === void 0 ? void 0 : _a.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
+    let userIp = getIp(req);
     if (id) {
         let sql;
         switch (type) {
@@ -59,6 +67,7 @@ async function doPost(req, resp, type) {
             let { content, caption, template, image } = ret[0];
             if (template == null)
                 resp.redirect("/err");
+            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${userIp}\t\n')`);
             let data = {
                 icon_image: image,
                 title: caption,
