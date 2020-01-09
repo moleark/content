@@ -7,7 +7,8 @@ import MarkdownIt from 'markdown-it';
 const sqlForWeb = `
 SELECT a.content, a.caption, b.content as template, c.path as image
     FROM webbuilder$test.tv_post a 
-        left join webbuilder$test.tv_template b on a.template=b.id left join webbuilder$test.tv_image c on a.image=c.id
+        left join webbuilder$test.tv_template b on a.template=b.id 
+        left join webbuilder$test.tv_image c on a.image=c.id
     WHERE a.id=
 `;
 const sqlForMobile = `
@@ -29,10 +30,20 @@ export const post = async (req: Request, resp: Response) => {
     await doPost(req, resp, 'auto');
 }
 
+const getIp = function(req) {
+    var ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddres || req.socket.remoteAddress || '';
+    if(ip.split(',').length>0){
+      ip = ip.split(',')[0];
+    }
+    return ip;
+  };
+
+
 async function doPost(req: Request, resp: Response, type: 'web' | 'mobile' | 'auto') {
     let userAgent = req.headers['user-agent'];
     let isMobile = userAgent?.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
+    let userIp =  getIp(req);
     if (id) {
         let sql: string;
         switch (type) {
@@ -45,6 +56,7 @@ async function doPost(req: Request, resp: Response, type: 'web' | 'mobile' | 'au
             let md = new MarkdownIt({ html: true });
             let { content, caption, template, image } = ret[0];
             if (template == null) resp.redirect("/err");
+            await tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${userIp}\t\n')`);
             let data = {
                 icon_image: image,
                 title: caption,

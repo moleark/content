@@ -13,26 +13,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ejs = __importStar(require("ejs"));
 const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
+// call webbuilder$test.tv_addbrowsinghistory (24,47,'1\tPOST\t211.5.4.7\t\n');
 const sqlForWeb = `
-SELECT a.content, a.caption, b.content as template, c.path as image
-    FROM webbuilder$test.tv_post a 
-        left join webbuilder$test.tv_template b on a.template=b.id 
-        left join webbuilder$test.tv_image c on a.image=c.id
+    SELECT  a.titel, a.name, b.content as template
+    FROM    webbuilder$test.tv_webpage a 
+            left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
+`;
+const sqlForWebBrand = `
+    SELECT  a.webpage, a.branch, b.content as branch, a.sort
+    FROM    webbuilder$test.tv_webpagebranch a 
+            left join webbuilder$test.tv_branch b on a.branch=b.id 
+    WHERE a.webpage=
 `;
 const sqlForMobile = `
-SELECT a.content, a.caption, b.content_mobile as template
-    FROM webbuilder$test.tv_post a 
-        left join webbuilder$test.tv_template b on a.template=b.id 
+SELECT  a.titel, a.name, b.content as template
+    FROM    webbuilder$test.tv_webpage a 
+            left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
 `;
-exports.postM = async (req, resp) => {
-    await doPost(req, resp, 'mobile');
-};
-exports.postW = async (req, resp) => {
-    await doPost(req, resp, 'web');
-};
-exports.post = async (req, resp) => {
+exports.webpage = async (req, resp) => {
     await doPost(req, resp, 'auto');
 };
 const getIp = function (req) {
@@ -54,24 +54,35 @@ async function doPost(req, resp, type) {
             case 'auto':
                 sql = isMobile ? sqlForMobile : sqlForWeb;
                 break;
-            case 'web':
-                sql = sqlForWeb;
-                break;
-            case 'mobile':
-                sql = sqlForMobile;
-                break;
         }
         const ret = await tool_1.tableFromSql(sql + id);
+        const webpageData = await tool_1.tableFromSql(sqlForWebBrand + id + " order by a.sort ");
+        let content = '';
+        let md = new markdown_it_1.default({ html: true });
+        webpageData.sort(function (m, n) {
+            if (m.sort < n.sort)
+                return -1;
+            else if (m.sort > n.sort)
+                return 1;
+            else
+                return 0;
+        });
+        if (webpageData.length >= 1) {
+            content = webpageData.map(element => {
+                return mdResult(md, element.branch);
+            }).join('');
+        }
+        else {
+            content = webpageData[0].branch;
+        }
         if (ret.length > 0) {
-            let md = new markdown_it_1.default({ html: true });
-            let { content, caption, template, image } = ret[0];
+            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPAGE\t${userIp}\t\n')`);
+            let { titel, template, name } = ret[0];
             if (template == null)
                 resp.redirect("/err");
-            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${userIp}\t\n')`);
             let data = {
-                icon_image: image,
-                title: caption,
-                content: mdResult(md, content),
+                title: titel,
+                content: content,
             };
             let result = ejs.render(template, data);
             resp.end(result);
@@ -87,4 +98,4 @@ async function doPost(req, resp, type) {
 function mdResult(md, content) {
     return md.render(content);
 }
-//# sourceMappingURL=post.js.map
+//# sourceMappingURL=webPage.js.map
