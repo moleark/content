@@ -11,7 +11,9 @@ exports.pages = {
         "err": errorPage_1.errorPage,
     },
     "markdown": markdown_1.markdown,
+    "post-m/:id": post_1.postM,
+    "post-w/:id": post_1.postW,
     "post/:id": post_1.post,
-    "webpage/:id": webPage_1.webpage,
+    "webpage/:id": webPage_1.webpage
 };
 //# sourceMappingURL=index.js.map

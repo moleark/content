@@ -14,66 +14,70 @@ const ejs = __importStar(require("ejs"));
 const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
 // call webbuilder$test.tv_addbrowsinghistory (24,47,'1\tPOST\t211.5.4.7\t\n');
-const sqlForWebBrand = `
-    SELECT  a.webpage, a.branch, b.content as branch, a.sort
-    FROM    webbuilder$test.tv_webpagebranch a 
-            left join webbuilder$test.tv_branch b on a.branch=b.id 
-    WHERE a.webpage=
-`;
 const sqlForWeb = `
     SELECT  a.titel, a.name, b.content as template
     FROM    webbuilder$test.tv_webpage a 
             left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
 `;
+const sqlForWebBrand = `
+    SELECT  a.webpage, a.branch, b.content as branch, a.sort
+    FROM    webbuilder$test.tv_webpagebranch a 
+            left join webbuilder$test.tv_branch b on a.branch=b.id 
+    WHERE a.webpage=
+`;
 const sqlForMobile = `
-SELECT  a.titel, a.name, b.contentModule as template
+SELECT  a.titel, a.name, b.content as template
     FROM    webbuilder$test.tv_webpage a 
             left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
 `;
 exports.webpage = async (req, resp) => {
-    await doPost(req, resp);
+    await doPost(req, resp, 'auto');
 };
 const getIp = function (req) {
     var ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddres || req.socket.remoteAddress || '';
     if (ip.split(',').length > 0) {
         ip = ip.split(',')[0];
     }
-    console.log(req.headers['x-real-ip']);
     return ip;
 };
-async function doPost(req, resp) {
+async function doPost(req, resp, type) {
     var _a;
     let userAgent = req.headers['user-agent'];
     let isMobile = (_a = userAgent) === null || _a === void 0 ? void 0 : _a.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
     let userIp = getIp(req);
     if (id) {
-        let sql = isMobile ? sqlForMobile : sqlForWeb;
+        let sql;
+        switch (type) {
+            case 'auto':
+                sql = isMobile ? sqlForMobile : sqlForWeb;
+                break;
+        }
         const ret = await tool_1.tableFromSql(sql + id);
         const webpageData = await tool_1.tableFromSql(sqlForWebBrand + id + " order by a.sort ");
         let content = '';
         let md = new markdown_it_1.default({ html: true });
+        webpageData.sort(function (m, n) {
+            if (m.sort < n.sort)
+                return -1;
+            else if (m.sort > n.sort)
+                return 1;
+            else
+                return 0;
+        });
         if (webpageData.length >= 1) {
-            webpageData.sort(function (m, n) {
-                if (m.sort < n.sort)
-                    return -1;
-                else if (m.sort > n.sort)
-                    return 1;
-                else
-                    return 0;
-            });
             content = webpageData.map(element => {
                 return mdResult(md, element.branch);
             }).join('');
         }
         else {
-            content = mdResult(md, '内');
+            content = webpageData[0].branch;
         }
         if (ret.length > 0) {
             await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPAGE\t${userIp}\t\n')`);
-            let { titel, template } = ret[0];
+            let { titel, template, name } = ret[0];
             if (template == null)
                 resp.redirect("/err");
             let data = {
