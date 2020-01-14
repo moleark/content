@@ -66,10 +66,10 @@ function buildRouter(app, pageDefines) {
                 buildRouter(app, page);
                 break;
             case 'function':
-                app.use('/' + i, page);
+                app.get('/' + i, page);
                 break;
             case 'function':
-                app.use('/web-build/' + i, page);
+                app.get('/web-build/' + i, page);
                 break;
             default:
                 throw 'unknown';
