@@ -46,7 +46,7 @@ async function doPost(req, resp) {
             let { content, caption, template, image } = ret[0];
             if (template == null)
                 resp.redirect("/err");
-            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${userAgent}\t\n')`);
+            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${req.headers}\t\n')`);
             let data = {
                 icon_image: image,
                 title: caption,
