@@ -42,7 +42,6 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
 
     app.get('/', (req, res) => res.send('Hello World!'))
     app.use((req: Request, res: Response, next: NextFunction) => {
-        console.log(req.url);
         next();
     });
 

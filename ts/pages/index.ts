@@ -1,7 +1,7 @@
 import { hello } from "./hello";
 import { errorPage } from "./errorPage";
 import { markdown } from "./markdown";
-import { post, postM, postW } from './post';
+import { post } from './post';
 import { webpage } from './webPage'
 
 export const pages = {
@@ -10,8 +10,6 @@ export const pages = {
         "err": errorPage,
     },
     "markdown": markdown,
-    "post-m/:id": postM,
-    "post-w/:id": postW,
     "post/:id": post,
-    "webpage/:id": webpage
+    "webpage/:id": webpage,
 }
