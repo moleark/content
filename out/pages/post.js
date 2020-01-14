@@ -35,7 +35,7 @@ async function doPost(req, resp) {
     let id = req.params['id'];
     if (id) {
         let sql = isMobile ? sqlForMobile : sqlForWeb;
-        // switch (type) {
+        // switch (type) {//
         //     case 'auto': sql = isMobile ? sqlForMobile : sqlForWeb; break;
         //     case 'web': sql = sqlForWeb; break;
         //     case 'mobile': sql = sqlForMobile; break;
