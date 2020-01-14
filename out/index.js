@@ -54,7 +54,7 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
     buildRouter(app, pages_1.pages);
     // 监听服务
     let port = config_1.default.get('port');
-    app.listen(port, async () => {
+    app.listen(port, '0.0.0.0', async () => {
         console.log('J&K website on port ' + port);
     });
 })();

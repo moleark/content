@@ -32,20 +32,10 @@ export const webpage = async (req: Request, resp: Response) => {
     await doPost(req, resp);
 }
 
-const getIp = function (req) {
-    var ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddres || req.socket.remoteAddress || '';
-    if (ip.split(',').length > 0) {
-        ip = ip.split(',')[0];
-    }
-    console.log(req.headers['x-real-ip']);
-    return ip;
-};
-
 async function doPost(req: Request, resp: Response) {
-    let userAgent = req.headers['user-agent'];
-    let isMobile = userAgent?.match(/iphone|ipod|ipad|android/);
+    let userAgent = req.headers['user-agent'].toLowerCase();
+    let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
-    let userIp = getIp(req);
     if (id) {
         let sql: string = isMobile ? sqlForMobile : sqlForWeb;
         const ret = await tableFromSql(sql + id);
@@ -65,7 +55,7 @@ async function doPost(req: Request, resp: Response) {
             content = mdResult(md, '内')
         }
         if (ret.length > 0) {
-            await tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPAGE\t${userIp}\t\n')`);
+            await tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPAGE\t${req.ip}\t\n')`);
             let { titel, template } = ret[0];
             if (template == null) resp.redirect("/err");
             let data = {

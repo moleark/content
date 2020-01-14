@@ -40,7 +40,7 @@ const getIp = function (req) {
     if (ip.split(',').length > 0) {
         ip = ip.split(',')[0];
     }
-    console.log(req.headers['x-real-ip']);
+    console.log(req.connection.remoteAddres, 'req.connection.remoteAddres');
     return ip;
 };
 async function doPost(req, resp) {
@@ -49,6 +49,7 @@ async function doPost(req, resp) {
     let isMobile = (_a = userAgent) === null || _a === void 0 ? void 0 : _a.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
     let userIp = getIp(req);
+    console.log(req.ip);
     if (id) {
         let sql = isMobile ? sqlForMobile : sqlForWeb;
         const ret = await tool_1.tableFromSql(sql + id);
