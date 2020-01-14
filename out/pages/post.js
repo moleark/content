@@ -33,6 +33,7 @@ async function doPost(req, resp) {
     let userAgent = req.headers['user-agent'].toLowerCase();
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
+    var aa = JSON.stringify(req.headers);
     if (id) {
         let sql = isMobile ? sqlForMobile : sqlForWeb;
         // switch (type) {
@@ -46,7 +47,7 @@ async function doPost(req, resp) {
             let { content, caption, template, image } = ret[0];
             if (template == null)
                 resp.redirect("/err");
-            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${req.headers}\t\n')`);
+            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${aa}\t\n')`);
             let data = {
                 icon_image: image,
                 title: caption,
