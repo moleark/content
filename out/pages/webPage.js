@@ -35,22 +35,12 @@ SELECT  a.titel, a.name, b.contentModule as template
 exports.webpage = async (req, resp) => {
     await doPost(req, resp);
 };
-const getIp = function (req) {
-    var ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddres || req.socket.remoteAddress || '';
-    if (ip.split(',').length > 0) {
-        ip = ip.split(',')[0];
-    }
-    console.log(req.connection.remoteAddres, 'req.connection.remoteAddres');
-    return ip;
-};
 async function doPost(req, resp) {
-    var _a;
-    let userAgent = req.headers['user-agent'];
-    let isMobile = (_a = userAgent) === null || _a === void 0 ? void 0 : _a.match(/iphone|ipod|ipad|android/);
+    let userAgent = req.headers['user-agent'].toLowerCase();
+    let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
-    let userIp = getIp(req);
-    console.log(req.ip);
     if (id) {
+        console.log(req.ip);
         let sql = isMobile ? sqlForMobile : sqlForWeb;
         const ret = await tool_1.tableFromSql(sql + id);
         const webpageData = await tool_1.tableFromSql(sqlForWebBrand + id + " order by a.sort ");
@@ -73,7 +63,7 @@ async function doPost(req, resp) {
             content = mdResult(md, '内');
         }
         if (ret.length > 0) {
-            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPAGE\t${userIp}\t\n')`);
+            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPAGE\t${req.ip}\t\n')`);
             let { titel, template } = ret[0];
             if (template == null)
                 resp.redirect("/err");
