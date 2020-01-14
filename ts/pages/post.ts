@@ -39,7 +39,7 @@ async function doPost(req: Request, resp: Response) {
             let md = new MarkdownIt({ html: true });
             let { content, caption, template, image } = ret[0];
             if (template == null) resp.redirect("/err");
-            await tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${isMobile}\t\n')`);
+            await tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${userAgent}\t\n')`);
             let data = {
                 icon_image: image,
                 title: caption,
