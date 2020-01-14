@@ -47,6 +47,12 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
     //app.engine('html', ejs.);
     //设置模板引擎的格式即运用何种模板引擎
     app.set("view engine", "html");
+    app.all('*', function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        next();
+    });
     app.get('/', (req, res) => res.send('Hello World!'));
     app.use((req, res, next) => {
         next();
@@ -66,10 +72,10 @@ function buildRouter(app, pageDefines) {
                 buildRouter(app, page);
                 break;
             case 'function':
-                app.get('/' + i, page);
+                app.use('/' + i, page);
                 break;
             case 'function':
-                app.get('/web-build/' + i, page);
+                app.use('/web-build/' + i, page);
                 break;
             default:
                 throw 'unknown';
