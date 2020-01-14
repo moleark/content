@@ -29,17 +29,10 @@ SELECT a.content, a.caption, b.contentModule as template
 exports.post = async (req, resp) => {
     await doPost(req, resp);
 };
-const getIp = function (req) {
-    // var ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddres || req.socket.remoteAddress || '';
-    var ip = req.ip.split(',')[0];
-    return ip;
-};
 async function doPost(req, resp) {
-    var _a;
-    let userAgent = req.headers['user-agent'];
-    let isMobile = (_a = userAgent) === null || _a === void 0 ? void 0 : _a.match(/iphone|ipod|ipad|android/);
+    let userAgent = req.headers['user-agent'].toLowerCase();
+    let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
-    let userIp = getIp(req);
     if (id) {
         let sql = isMobile ? sqlForWeb : sqlForMobile;
         // switch (type) {
@@ -53,7 +46,7 @@ async function doPost(req, resp) {
             let { content, caption, template, image } = ret[0];
             if (template == null)
                 resp.redirect("/err");
-            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${userIp}\t\n')`);
+            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t\n')`);
             let data = {
                 icon_image: image,
                 title: caption,

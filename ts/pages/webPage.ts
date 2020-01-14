@@ -37,6 +37,7 @@ async function doPost(req: Request, resp: Response) {
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
     if (id) {
+        console.log(req.ip)
         let sql: string = isMobile ? sqlForMobile : sqlForWeb;
         const ret = await tableFromSql(sql + id);
         const webpageData = await tableFromSql(sqlForWebBrand + id + " order by a.sort ");
