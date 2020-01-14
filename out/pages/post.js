@@ -35,7 +35,7 @@ async function doPost(req, resp) {
     let id = req.params['id'];
     if (id) {
         let sql = isMobile ? sqlForMobile : sqlForWeb;
-        // switch (type) {//
+        // switch (type) {
         //     case 'auto': sql = isMobile ? sqlForMobile : sqlForWeb; break;
         //     case 'web': sql = sqlForWeb; break;
         //     case 'mobile': sql = sqlForMobile; break;
@@ -46,7 +46,7 @@ async function doPost(req, resp) {
             let { content, caption, template, image } = ret[0];
             if (template == null)
                 resp.redirect("/err");
-            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t\n')`);
+            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${isMobile}\t\n')`);
             let data = {
                 icon_image: image,
                 title: caption,
