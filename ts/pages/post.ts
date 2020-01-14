@@ -28,7 +28,7 @@ async function doPost(req: Request, resp: Response) {
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
     if (id) {
-        let sql: string = isMobile ? sqlForWeb : sqlForMobile;
+        let sql: string = isMobile ? sqlForMobile : sqlForWeb;
         // switch (type) {
         //     case 'auto': sql = isMobile ? sqlForMobile : sqlForWeb; break;
         //     case 'web': sql = sqlForWeb; break;
