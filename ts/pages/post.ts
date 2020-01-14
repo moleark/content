@@ -12,45 +12,38 @@ SELECT a.content, a.caption, b.content as template, c.path as image
     WHERE a.id=
 `;
 const sqlForMobile = `
-SELECT a.content, a.caption, b.content_mobile as template
+SELECT a.content, a.caption, b.contentModule as template
     FROM webbuilder$test.tv_post a 
         left join webbuilder$test.tv_template b on a.template=b.id 
     WHERE a.id=
 `;
 
-export const postM = async (req: Request, resp: Response) => {
-    await doPost(req, resp, 'mobile');
-}
-
-export const postW = async (req: Request, resp: Response) => {
-    await doPost(req, resp, 'web');
-}
 
 export const post = async (req: Request, resp: Response) => {
-    await doPost(req, resp, 'auto');
+    await doPost(req, resp);
 }
 
-const getIp = function(req) {
-    var ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddres || req.socket.remoteAddress || '';
-    if(ip.split(',').length>0){
-      ip = ip.split(',')[0];
-    }
+const getIp = function (req) {
+
+    // var ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddres || req.socket.remoteAddress || '';
+
+    var ip = req.ip.split(',')[0];
     return ip;
-  };
+};
 
 
-async function doPost(req: Request, resp: Response, type: 'web' | 'mobile' | 'auto') {
+async function doPost(req: Request, resp: Response) {
     let userAgent = req.headers['user-agent'];
     let isMobile = userAgent?.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
-    let userIp =  getIp(req);
+    let userIp = getIp(req);
     if (id) {
-        let sql: string;
-        switch (type) {
-            case 'auto': sql = isMobile ? sqlForMobile : sqlForWeb; break;
-            case 'web': sql = sqlForWeb; break;
-            case 'mobile': sql = sqlForMobile; break;
-        }
+        let sql: string = isMobile ? sqlForWeb : sqlForMobile;
+        // switch (type) {
+        //     case 'auto': sql = isMobile ? sqlForMobile : sqlForWeb; break;
+        //     case 'web': sql = sqlForWeb; break;
+        //     case 'mobile': sql = sqlForMobile; break;
+        // }
         const ret = await tableFromSql(sql + id);
         if (ret.length > 0) {
             let md = new MarkdownIt({ html: true });

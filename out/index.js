@@ -49,7 +49,6 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
     app.set("view engine", "html");
     app.get('/', (req, res) => res.send('Hello World!'));
     app.use((req, res, next) => {
-        console.log(req.url);
         next();
     });
     buildRouter(app, pages_1.pages);
