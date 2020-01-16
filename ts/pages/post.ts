@@ -1,5 +1,4 @@
 import * as ejs from 'ejs';
-import fs from 'fs';
 import { Request, Response, json } from "express";
 import { tableFromSql } from '../db/mysql/tool';
 import MarkdownIt from 'markdown-it';
@@ -34,18 +33,15 @@ async function doPost(req: Request, resp: Response) {
     if (id) {
         let sql: string = isMobile ? sqlForMobile : sqlForWeb;
         const ret = await tableFromSql(sql + id);
-        console.log(ret[0])
         if (ret.length > 0) {
             let md = new MarkdownIt({ html: true });
-            let { content,  template } = ret[0];
+            let { content, template } = ret[0];
             if (template == null) resp.redirect("/err");
             await tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${aa}\t\n')`);
             let data = {
-                // icon_image: image,
-                // title: caption,
                 replace: mdResult(md, content),
             };
-            let result = ejs.render(mdResult(md, template), data);
+            let result = ejs.render(template, data);
             resp.end(result);
         } else {
             resp.redirect("/err")
@@ -55,5 +51,5 @@ async function doPost(req: Request, resp: Response) {
     }
 }
 function mdResult(md, content) {
-    return md.render(content)
+    return md.render(content);
 }
