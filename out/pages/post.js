@@ -39,7 +39,6 @@ async function doPost(req, resp) {
     if (id) {
         let sql = isMobile ? sqlForMobile : sqlForWeb;
         const ret = await tool_1.tableFromSql(sql + id);
-        console.log(ret[0]);
         if (ret.length > 0) {
             let md = new markdown_it_1.default({ html: true });
             let { content, template } = ret[0];
@@ -47,11 +46,9 @@ async function doPost(req, resp) {
                 resp.redirect("/err");
             await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${aa}\t\n')`);
             let data = {
-                // icon_image: image,
-                // title: caption,
                 replace: mdResult(md, content),
             };
-            let result = ejs.render(mdResult(md, template), data);
+            let result = ejs.render(template, data);
             resp.end(result);
         }
         else {
