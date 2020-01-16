@@ -44,13 +44,13 @@ async function doPost(req, resp) {
         const ret = await tool_1.tableFromSql(sql + id);
         if (ret.length > 0) {
             let md = new markdown_it_1.default({ html: true });
-            let { content, caption, template, image } = ret[0];
+            let { content, template } = ret[0];
             if (template == null)
                 resp.redirect("/err");
             await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${aa}\t\n')`);
             let data = {
-                icon_image: image,
-                title: caption,
+                // icon_image: image,
+                // title: caption,
                 replace: mdResult(md, content),
             };
             let result = ejs.render(template, data);

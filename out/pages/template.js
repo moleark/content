@@ -13,7 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ejs = __importStar(require("ejs"));
 const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
-const templet = `<!DOCTYPE html><html lang = "en"> <head> <meta charset = "UTF-8" > </head><body> <div> <h1 style="color:red; text-align: center;">请添加模板</h1> </div> </body></html>`;
+const templet = `<!DOCTYPE html><html lang = "en"> <head> <meta charset = "UTF-8" > </head><body> <div> <h1 style="color:red; text-align: center;">[ 没有模板 ]请添加</h1> </div> </body></html>`;
 const sqlForWeb = `
 SELECT b.content 
     FROM webbuilder$test.tv_template b 
@@ -40,21 +40,17 @@ async function doTemplate(req, resp) {
             let template;
             if (isMobile) {
                 if (ret[0].contentModule === null) {
-                    console.log('无');
                     template = templet;
                 }
                 else {
-                    console.log('家');
                     template = ret[0].contentModule;
                 }
             }
             else {
                 if (ret[0].content === null) {
-                    console.log('无');
                     template = templet;
                 }
                 else {
-                    console.log('家');
                     template = ret[0].content;
                 }
             }
