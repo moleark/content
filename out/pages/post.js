@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ejs = __importStar(require("ejs"));
 const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
+var logger = require('./../../logs/logger.js');
 const sqlForWeb = `
 SELECT a.content, a.caption, b.content as template, c.path as image
     FROM webbuilder$test.tv_post a 
@@ -30,18 +31,15 @@ exports.post = async (req, resp) => {
     await doPost(req, resp);
 };
 async function doPost(req, resp) {
+    logger.info(req.headers);
     let userAgent = req.headers['user-agent'].toLowerCase();
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
     var aa = JSON.stringify(req.headers);
     if (id) {
         let sql = isMobile ? sqlForMobile : sqlForWeb;
-        // switch (type) {
-        //     case 'auto': sql = isMobile ? sqlForMobile : sqlForWeb; break;
-        //     case 'web': sql = sqlForWeb; break;
-        //     case 'mobile': sql = sqlForMobile; break;
-        // }
         const ret = await tool_1.tableFromSql(sql + id);
+        console.log(ret[0]);
         if (ret.length > 0) {
             let md = new markdown_it_1.default({ html: true });
             let { content, template } = ret[0];
@@ -53,7 +51,7 @@ async function doPost(req, resp) {
                 // title: caption,
                 replace: mdResult(md, content),
             };
-            let result = ejs.render(template, data);
+            let result = ejs.render(mdResult(md, template), data);
             resp.end(result);
         }
         else {
