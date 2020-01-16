@@ -44,7 +44,7 @@ async function doPost(req: Request, resp: Response) {
             let data = {
                 icon_image: image,
                 title: caption,
-                content: mdResult(md, content),
+                replace: mdResult(md, content),
             };
             let result = ejs.render(template, data);
             resp.end(result);

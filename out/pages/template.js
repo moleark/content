@@ -13,45 +13,53 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ejs = __importStar(require("ejs"));
 const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
+const templet = `<!DOCTYPE html><html lang = "en"> <head> <meta charset = "UTF-8" > </head><body> <div> <h1 style="color:red; text-align: center;">请添加模板</h1> </div> </body></html>`;
 const sqlForWeb = `
-SELECT a.content, a.caption, b.content as template, c.path as image
-    FROM webbuilder$test.tv_post a 
-        left join webbuilder$test.tv_template b on a.template=b.id 
-        left join webbuilder$test.tv_image c on a.image=c.id
-    WHERE a.id=
+SELECT b.content 
+    FROM webbuilder$test.tv_template b 
+    WHERE b.id=
 `;
+// const sqlForWeb = `SELECT * FROM webbuilder$test.tv_template WHERE id=`
 const sqlForMobile = `
-SELECT a.content, a.caption, b.contentModule as template
-    FROM webbuilder$test.tv_post a 
-        left join webbuilder$test.tv_template b on a.template=b.id 
-    WHERE a.id=
+SELECT b.contentModule
+    FROM webbuilder$test.tv_template b 
+    WHERE b.id=
 `;
-exports.post = async (req, resp) => {
-    await doPost(req, resp);
+exports.template = async (req, resp) => {
+    await doTemplate(req, resp);
 };
-async function doPost(req, resp) {
+async function doTemplate(req, resp) {
     let userAgent = req.headers['user-agent'].toLowerCase();
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
-    var aa = JSON.stringify(req.headers);
     if (id) {
         let sql = isMobile ? sqlForMobile : sqlForWeb;
-        // switch (type) {
-        //     case 'auto': sql = isMobile ? sqlForMobile : sqlForWeb; break;
-        //     case 'web': sql = sqlForWeb; break;
-        //     case 'mobile': sql = sqlForMobile; break;
-        // }
         const ret = await tool_1.tableFromSql(sql + id);
         if (ret.length > 0) {
             let md = new markdown_it_1.default({ html: true });
-            let { content, caption, template, image } = ret[0];
-            if (template == null)
-                resp.redirect("/err");
-            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${aa}\t\n')`);
+            let template;
+            if (isMobile) {
+                if (ret[0].contentModule === null) {
+                    console.log('无');
+                    template = templet;
+                }
+                else {
+                    console.log('家');
+                    template = ret[0].contentModule;
+                }
+            }
+            else {
+                if (ret[0].content === null) {
+                    console.log('无');
+                    template = templet;
+                }
+                else {
+                    console.log('家');
+                    template = ret[0].content;
+                }
+            }
             let data = {
-                icon_image: image,
-                title: caption,
-                replace: mdResult(md, content),
+                replace: mdResult(md, ''),
             };
             let result = ejs.render(template, data);
             resp.end(result);
@@ -67,4 +75,4 @@ async function doPost(req, resp) {
 function mdResult(md, content) {
     return md.render(content);
 }
-//# sourceMappingURL=post.js.map
+//# sourceMappingURL=template.js.map
