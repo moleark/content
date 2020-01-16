@@ -36,12 +36,12 @@ async function doPost(req: Request, resp: Response) {
         const ret = await tableFromSql(sql + id);
         if (ret.length > 0) {
             let md = new MarkdownIt({ html: true });
-            let { content, caption, template, image } = ret[0];
+            let { content,  template } = ret[0];
             if (template == null) resp.redirect("/err");
             await tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t\n')`);
             let data = {
-                icon_image: image,
-                title: caption,
+                // icon_image: image,
+                // title: caption,
                 replace: mdResult(md, content),
             };
             let result = ejs.render(template, data);

@@ -37,10 +37,10 @@ exports.webpage = async (req, resp) => {
 };
 async function doPost(req, resp) {
     let userAgent = req.headers['user-agent'].toLowerCase();
+    console.log(req.headers);
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
     if (id) {
-        console.log(req.ip);
         let sql = isMobile ? sqlForMobile : sqlForWeb;
         const ret = await tool_1.tableFromSql(sql + id);
         const webpageData = await tool_1.tableFromSql(sqlForWebBrand + id + " order by a.sort ");
@@ -64,11 +64,11 @@ async function doPost(req, resp) {
         }
         if (ret.length > 0) {
             await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPAGE\t${req.ip}\t\n')`);
-            let { titel, template } = ret[0];
+            let { template } = ret[0];
             if (template == null)
                 resp.redirect("/err");
             let data = {
-                title: titel,
+                // title: titel,
                 replace: content,
             };
             let result = ejs.render(template, data);
