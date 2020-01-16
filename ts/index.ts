@@ -39,6 +39,12 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
     //app.engine('html', ejs.);
     //设置模板引擎的格式即运用何种模板引擎
     app.set("view engine", "html");
+    app.all('*', function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        next();
+    });
 
     app.get('/', (req, res) => res.send('Hello World!'))
     app.use((req: Request, res: Response, next: NextFunction) => {
@@ -50,7 +56,7 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
     // 监听服务
     let port = config.get<number>('port');
 
-    app.listen(port,'0.0.0.0', async () => {
+    app.listen(port, '0.0.0.0', async () => {
         console.log('J&K website on port ' + port);
     });
 })();
