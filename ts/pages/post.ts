@@ -25,6 +25,7 @@ export const post = async (req: Request, resp: Response) => {
 
 async function doPost(req: Request, resp: Response) {
     let userAgent = req.headers['user-agent'].toLowerCase();
+    info(req.headers);
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
     if (id) {
