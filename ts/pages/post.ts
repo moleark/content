@@ -38,7 +38,7 @@ async function doPost(req: Request, resp: Response) {
             if (template == null) resp.redirect("/err");
             await tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t\n')`);
             let data = {
-                replace: mdResult(md, content),
+                resss: mdResult(md, content),
             };
             let result = ejs.render(template, data);
             resp.end(result);
