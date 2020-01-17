@@ -2,7 +2,7 @@ import * as ejs from 'ejs';
 import { Request, Response } from "express";
 import { tableFromSql } from '../db/mysql/tool';
 import MarkdownIt from 'markdown-it';
-import { info } from './../../logs/logger';
+var logger = require('./../../logs/logger.js');
 
 const sqlForWeb = `
 SELECT a.content, a.caption, b.content as template, c.path as image
@@ -24,7 +24,7 @@ export const post = async (req: Request, resp: Response) => {
 }
 
 async function doPost(req: Request, resp: Response) {
-    info(req.headers);
+    logger.info(req.headers);
 
     let userAgent = req.headers['user-agent'].toLowerCase();
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
