@@ -1,0 +1,13 @@
+{
+    "appenders": [
+        {
+            "type": "console"
+        },
+        {
+            "type": "dateFile",
+            "filename": "logs/cheese.log",
+            "pattern": "-yyyy-MM-dd",
+            "alwaysIncludePattern": true
+        }
+    ]
+}
