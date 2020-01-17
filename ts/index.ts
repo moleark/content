@@ -3,7 +3,6 @@ import config from 'config';
 import { pages } from "./pages";
 import * as bodyParser from 'body-parser';
 import express, { Request, Response, NextFunction, Router, Application } from 'express';
-import { useLog } from './../logs/logger';
 
 const markdownIt = require('markdown-it'), md = new markdownIt();
 
@@ -18,7 +17,7 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
             error: err
         });
     });
-    app.use(useLog())
+
     // 使用 body-parser 
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());

@@ -15,7 +15,6 @@ const config_1 = __importDefault(require("config"));
 const pages_1 = require("./pages");
 const bodyParser = __importStar(require("body-parser"));
 const express_1 = __importDefault(require("express"));
-const logger_1 = require("./../logs/logger");
 const markdownIt = require('markdown-it'), md = new markdownIt();
 (async function () {
     // 创建express服务
@@ -27,7 +26,6 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
             error: err
         });
     });
-    app.use(logger_1.useLog());
     // 使用 body-parser 
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
