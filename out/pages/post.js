@@ -35,7 +35,6 @@ async function doPost(req, resp) {
     let userAgent = req.headers['user-agent'].toLowerCase();
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
-    var aa = JSON.stringify(req.headers);
     if (id) {
         let sql = isMobile ? sqlForMobile : sqlForWeb;
         const ret = await tool_1.tableFromSql(sql + id);
@@ -44,7 +43,7 @@ async function doPost(req, resp) {
             let { content, template } = ret[0];
             if (template == null)
                 resp.redirect("/err");
-            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t${aa}\t\n')`);
+            await tool_1.tableFromSql(`call webbuilder$test.tv_addbrowsinghistory (24,47,'${id}\tPOST\t${req.ip}\t\n')`);
             let data = {
                 replace: mdResult(md, content),
             };
