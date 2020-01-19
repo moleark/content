@@ -68,7 +68,7 @@ async function doPost(req, resp) {
             if (template == null)
                 resp.redirect("/err");
             let data = {
-                // title: titel,
+                title: '',
                 replace: content,
             };
             let result = ejs.render(template, data);
