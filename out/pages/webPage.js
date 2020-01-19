@@ -37,7 +37,6 @@ exports.webpage = async (req, resp) => {
 };
 async function doPost(req, resp) {
     let userAgent = req.headers['user-agent'].toLowerCase();
-    console.log(req.headers);
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
     if (id) {
@@ -68,7 +67,7 @@ async function doPost(req, resp) {
             if (template == null)
                 resp.redirect("/err");
             let data = {
-                // title: titel,
+                title: '',
                 replace: content,
             };
             let result = ejs.render(template, data);
