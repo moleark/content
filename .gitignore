@@ -1,3 +1,4 @@
+/logs
 node_modules
 config/production.json
 config/development.json
