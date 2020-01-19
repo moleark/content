@@ -2,7 +2,8 @@ import cors from 'cors';
 import config from 'config';
 import { pages } from "./pages";
 import * as bodyParser from 'body-parser';
-import express, { Request, Response, NextFunction, Router, Application } from 'express';
+import express, { Request, Response, NextFunction, Application } from 'express';
+import { useLog } from './../logs/logger.js'
 
 const markdownIt = require('markdown-it'), md = new markdownIt();
 
@@ -10,6 +11,8 @@ const markdownIt = require('markdown-it'), md = new markdownIt();
 
     // 创建express服务
     let app = express();
+    app.use(useLog());
+
     app.use((err: any, req: Request, res: Response, next: NextFunction) => {
         res.status(err.status || 500);
         res.render('error', {

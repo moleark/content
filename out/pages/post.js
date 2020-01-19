@@ -13,7 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ejs = __importStar(require("ejs"));
 const tool_1 = require("../db/mysql/tool");
 const markdown_it_1 = __importDefault(require("markdown-it"));
-var logger = require('./../../logs/logger.js');
+const logger_js_1 = require("./../../logs/logger.js");
 const sqlForWeb = `
 SELECT a.content, a.caption, b.content as template, c.path as image
     FROM webbuilder$test.tv_post a 
@@ -31,8 +31,8 @@ exports.post = async (req, resp) => {
     await doPost(req, resp);
 };
 async function doPost(req, resp) {
-    logger.info(req.headers);
     let userAgent = req.headers['user-agent'].toLowerCase();
+    logger_js_1.info(req.headers);
     let isMobile = userAgent.match(/iphone|ipod|ipad|android/);
     let id = req.params['id'];
     if (id) {

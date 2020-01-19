@@ -15,10 +15,12 @@ const config_1 = __importDefault(require("config"));
 const pages_1 = require("./pages");
 const bodyParser = __importStar(require("body-parser"));
 const express_1 = __importDefault(require("express"));
+const logger_js_1 = require("./../logs/logger.js");
 const markdownIt = require('markdown-it'), md = new markdownIt();
 (async function () {
     // 创建express服务
     let app = express_1.default();
+    app.use(logger_js_1.useLog());
     app.use((err, req, res, next) => {
         res.status(err.status || 500);
         res.render('error', {
