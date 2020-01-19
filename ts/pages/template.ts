@@ -46,6 +46,7 @@ async function doTemplate(req: Request, resp: Response) {
             }
             let data = {
                 replace: mdResult(md, ''),
+                title: ''
             };
             let result = ejs.render(template, data);
             resp.end(result);

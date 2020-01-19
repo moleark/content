@@ -1,0 +1,202 @@
+[2020-01-17T08:44:27.496] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-17T09:45:54.364] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  purpose: 'prefetch',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-17T09:46:08.946] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-17T15:23:24.759] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-17T15:23:37.621] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  purpose: 'prefetch',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-17T15:23:43.409] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-17T15:25:43.715] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-17T15:26:01.556] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-19T11:14:52.900] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  purpose: 'prefetch',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-19T11:15:46.875] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'cache-control': 'max-age=0',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-19T11:19:57.754] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'cache-control': 'max-age=0',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-19T11:21:15.020] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'cache-control': 'max-age=0',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-19T11:21:18.207] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'cache-control': 'max-age=0',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-19T11:21:31.786] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'cache-control': 'max-age=0',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-19T11:21:55.058] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'cache-control': 'max-age=0',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
+[2020-01-19T11:24:15.333] [INFO] cheese - {
+  host: 'localhost:3017',
+  connection: 'keep-alive',
+  'cache-control': 'max-age=0',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+  'sec-fetch-user': '?1',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'zh-CN,zh;q=0.9'
+}
